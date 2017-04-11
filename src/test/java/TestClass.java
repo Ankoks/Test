@@ -1,5 +1,9 @@
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.functors.NotNullPredicate;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.transform.*;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
@@ -7,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -24,9 +29,129 @@ public class TestClass {
         super();
     }
 
-    public static void main(String[] args) throws TransformerException, SQLException, ClassNotFoundException, IOException, InterruptedException, ParseException {
+    private int num;
 
-        System.out.println(method());
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
+    }
+
+    public static void main(String[] args) throws TransformerException, SQLException, ClassNotFoundException, IOException, InterruptedException, ParseException, CloneNotSupportedException {
+
+        List<Integer> periods = new LinkedList<Integer>();
+        int year = 2015;
+        periods.add(year);
+//        int i = 2015;
+//        while (i < year) {
+//            periods.add(--year);
+//            i++;
+//        }
+        for (int i = 2015; i < year; i++) {
+            periods.add(--year);
+        }
+
+        System.out.println(periods);
+
+
+    }
+
+    private static boolean relativeDifferenceBigger(BigDecimal target, BigDecimal candidate, BigDecimal difference) {
+        BigDecimal lowerBound = target.subtract(target.multiply(difference));
+        BigDecimal upperBound = target.add(target.multiply(difference));
+        return candidate.compareTo(lowerBound) < 0 || candidate.compareTo(upperBound) > 0;
+    }
+
+    public static void rangeList( List<Integer> ids) {
+        for (int index = 0; index < ids.size();) {
+            int nextIndex = index + 50 < ids.size() ? index + 50 : ids.size();
+            System.out.println("возьмутся элементы в диапозоне [" + index + ", " + nextIndex + ")");
+            action(ids.subList(index, nextIndex));
+            index = nextIndex;
+        }
+    }
+
+    public static void action(List<Integer> list) {
+        System.out.println(list);
+//        System.out.println(list.size());
+    }
+
+    public static void someMEthod(int a, String... str) {
+        System.out.println("this method number: " + a);
+        System.out.println("str.length = " + str.length);
+        System.out.println("str.toString() = " + str.toString());
+        if (str.length != 0) {
+            for (String string : str) System.out.println(string);
+        }
+
+    }
+
+    public static void workWithGenerics() {
+        List list = new ArrayList();
+        list.add("abc");
+        list.add(new Integer(5)); //OK
+
+        for (Object obj : list) {
+//            String str = (String) obj; //здесь приведение типов бросит ClassCastException
+            if (obj instanceof String) {
+                String str = (String) obj;
+                System.out.println(str);
+            } else if (obj instanceof Integer) {
+                Integer num = (Integer) obj;
+                System.out.println(num);
+            }
+        }
+    }
+
+    public static void workWithStack() {
+        int[] stackArray = new int[4];
+//        for (int i = 0; i < stackArray.length; i++) {
+//            stackArray[i] = i*2;
+//        }
+
+        stackArray[0] = 1;
+        stackArray[1] = 3;
+        stackArray[3] = 9;
+
+        System.out.println(stackArray.length);
+        System.out.println(stackArray[1]);
+
+        //==============================================================================================================
+        stacks.Stack mStack = new stacks.Stack(10);
+
+        mStack.push(79);
+        mStack.push(59);
+        mStack.push(35);
+        mStack.push(24);
+
+        mStack.deleteElement();
+
+        System.out.println("stacks.Stack: ");
+        while (!mStack.isEmpty()) {
+            int value = mStack.pop();
+            System.out.print(value);
+            System.out.print(" ");
+        }
+
+        System.out.println("\nstack size is " + mStack);
+    }
+
+    public static Date toDate(XMLGregorianCalendar date) {
+        if (date == null) {
+            return null;
+        }
+        return date.toGregorianCalendar().getTime();
+    }
+
+    public static <T> T nvl(T nullable1, T nullable2, T... fallBacks) {
+        T res = nullable1 != null ? nullable1 : nullable2;
+        if (res == null && ArrayUtils.isNotEmpty(fallBacks)) {
+            res = (T) CollectionUtils.find(Arrays.asList(fallBacks), NotNullPredicate.getInstance());
+        }
+
+        return res;
     }
 
     private static int fib(int i) {

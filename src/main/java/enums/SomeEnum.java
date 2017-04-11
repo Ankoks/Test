@@ -1,3 +1,5 @@
+package enums;
+
 /**
  * @author Anton Koksharov
  *         Date: 05.05.2016
