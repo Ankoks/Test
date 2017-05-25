@@ -40,12 +40,11 @@ public class Node {
     }
 
     public static Node referse(Node node) {
-        Node first = node;
         Node second = node.next;
         Node third = second.next;
 
-        first.next = null;
-        second.next = first;
+        node.next = null;
+        second.next = node;
 
         Node current = third;
         Node prev = second;

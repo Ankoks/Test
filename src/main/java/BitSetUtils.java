@@ -66,6 +66,10 @@ public class BitSetUtils {
         BitSet bs_2 = binaryStringToBitSet(str_2); //{0, 1, 24, 25, 26, 27, 48, 49, 50, 51, 96, 97, 98, 99, 240}
         System.out.println(bs_2);
 
+        String str_3 = decodeBinaryString("55p6ccr75nz0gxndcb2p25zkxmmuyvns8thulf1mf3ibtuqskfnjwdp4liwxutqlayw9p7c0cvlfhwswvll02d7rl2jgg0");
+        BitSet bs_3 = binaryStringToBitSet(str_3); //{480, 483}
+        System.out.println(bs_3);
+
         //кодировка в битсет
         BitSet bs_bs = new BitSet();
 

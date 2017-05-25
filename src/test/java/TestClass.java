@@ -1,3 +1,4 @@
+import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.functors.NotNullPredicate;
 import org.apache.commons.lang3.ArrayUtils;
@@ -41,21 +42,21 @@ public class TestClass {
 
     public static void main(String[] args) throws TransformerException, SQLException, ClassNotFoundException, IOException, InterruptedException, ParseException, CloneNotSupportedException {
 
-        List<Integer> periods = new LinkedList<Integer>();
-        int year = 2015;
-        periods.add(year);
-//        int i = 2015;
-//        while (i < year) {
-//            periods.add(--year);
-//            i++;
-//        }
-        for (int i = 2015; i < year; i++) {
-            periods.add(--year);
+        System.out.println(DateUtils.toDayBeginning(new Date()));
+        System.out.println(DateUtils.toDayEnd(new Date()));
+
+    }
+
+    private static void chunkWork() {
+        List<Long> list = new ArrayList<Long>();
+
+        for (int i = 1; i <= 3; i++) {
+            list.add((long) i);
         }
 
-        System.out.println(periods);
-
-
+        for (List<Long> chunkList : Lists.partition(list, 8)) {
+            System.out.println(chunkList);
+        }
     }
 
     private static boolean relativeDifferenceBigger(BigDecimal target, BigDecimal candidate, BigDecimal difference) {
